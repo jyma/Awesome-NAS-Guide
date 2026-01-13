@@ -130,12 +130,14 @@
 
 > 💡 **独行快，众行远**。折腾 NAS 的乐趣不仅在于点亮服务，更在于分享与交流。
 
+这篇文档还在持续更新中（🚧 Construction in Progress）。
+
 如果你在搭建过程中遇到了**文档未覆盖的深坑**，或者有**更好的硬件/软件方案**想要分享，欢迎加入技术交流群！
 
 如有意向，请扫描下方二维码添加我的微信：
 
 <div align="center">
-  <img src="./assets/wechat_qr.jpg" width="200" alt="WeChat QR Code">
+  <img src="./assets/wechat_qr.png" width="200" alt="WeChat QR Code">
   <br>
   <b>WeChat ID: mje</b>
 </div>
