@@ -50,6 +50,7 @@
 
 <div align="center">
   <img src="../assets/fnos_time_machine.png" alt="飞牛时间机器配置参考截图" width="1200" />
+  <br>
   <font size="2" color="gray">飞牛时间机器配置参考截图</font>
 </div>
 
@@ -149,6 +150,7 @@ iOS 系统比较封闭，第三方相册 App 无法像 iCloud 一样后台自动
 
 <div align="center">
   <img src="../assets/iphone_kj.png" alt="iPhone快捷指令参考截图" width="300" />
+  <br>
   <font size="2" color="gray">iPhone快捷指令参考截图</font>
 </div>
 
