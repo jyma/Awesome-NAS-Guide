@@ -48,10 +48,11 @@
 > **💡 Tips (飞牛OS)**：
 > 直接在 **设置** -> **文件共享协议** 中打开 **Time Machine 服务** 即可。
 
-<figure align="center">
-  <img src="../assets/fnos_time_machine.png" alt="飞牛时间机器配置参考截图">
-  <figcaption>飞牛时间机器配置参考截图</figcaption>
-</figure>
+<div align="center">
+  <img src="../assets/fnos_time_machine.png" alt="飞牛时间机器配置参考截图" width="300" />
+  <br>
+  <font size="2" color="gray">飞牛时间机器配置参考截图</font>
+</div>
 
 > **🐧 极客专区：Linux/OpenWrt 手搓配置**
 > 如果你是手写 `smb.conf`，请添加以下针对 macOS 的优化参数：
@@ -147,10 +148,11 @@ iOS 系统比较封闭，第三方相册 App 无法像 iCloud 一样后台自动
 > 每天你下班回家连上 Wi-Fi，手机刚充上电，顶部就会弹出一个横幅：“飞牛自动备份中...”。
 > 飞牛 App 会自动打开传输刚才拍的照片，然后乖乖退回后台。你完全不需要手动去点它，这才是真正的**无感备份**。
 
-<figure align="center">
-  <img src="../assets/iphone_kj.png" alt="iPhone快捷指令参考截图" height="400">
-  <figcaption>iPhone快捷指令参考截图</figcaption>
-</figure>
+<div align="center">
+  <img src="../assets/iphone_kj.png" alt="iPhone快捷指令参考截图" width="300" />
+  <br>
+  <font size="2" color="gray">iPhone快捷指令参考截图</font>
+</div>
 
 ---
 

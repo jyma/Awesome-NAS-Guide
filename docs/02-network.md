@@ -138,10 +138,11 @@
 1. **保存设置**
     点击底部的 **保存/应用** 按钮。
 
-<figure align="center">
-  <img src="../assets/gm.png" alt="移动光猫配置参考截图">
-  <figcaption>移动光猫配置参考截图</figcaption>
-</figure>
+<div align="center">
+  <img src="../assets/gm.png" alt="移动光猫配置参考截图" width="300" />
+  <br>
+  <font size="2" color="gray">移动光猫配置参考截图</font>
+</div>
 
 *💡 **Tips**：如果发现原连接是灰色的“无法编辑”状态，请先截图保存 VLAN ID 等参数，然后**删除**该连接，再按照桥接模式参数**新建**一个连接即可。*
 
