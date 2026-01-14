@@ -49,7 +49,7 @@
 > 直接在 **设置** -> **文件共享协议** 中打开 **Time Machine 服务** 即可。
 
 <div align="center">
-  <img src="../assets/fnos_time_machine.png" alt="飞牛时间机器配置参考截图" width="500" />
+  <img src="../assets/fnos_time_machine.png" alt="飞牛时间机器配置参考截图" width="800" />
   <br>
   <font size="2" color="gray">飞牛时间机器配置参考截图</font>
 </div>
