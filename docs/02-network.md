@@ -139,7 +139,7 @@
     点击底部的 **保存/应用** 按钮。
 
 <div align="center">
-  <img src="../assets/gm.png" alt="移动光猫配置参考截图" width="300" />
+  <img src="../assets/gm.png" alt="移动光猫配置参考截图" width="500" />
   <br>
   <font size="2" color="gray">移动光猫配置参考截图</font>
 </div>
