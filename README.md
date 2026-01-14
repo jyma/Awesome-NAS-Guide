@@ -141,7 +141,6 @@
 
 <div align="center">
   <img src="./assets/wechat_qr.png" width="200" alt="WeChat QR Code">
-  <br>
   <b>WeChat ID: mje</b>
 </div>
 
