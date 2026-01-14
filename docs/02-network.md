@@ -140,6 +140,7 @@
 
 <div align="center">
   <img src="../assets/gm.png" alt="移动光猫配置参考截图" width="800" />
+  <br>
   <font size="2" color="gray">移动光猫配置参考截图</font>
 </div>
 
