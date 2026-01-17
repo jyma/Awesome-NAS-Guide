@@ -6,7 +6,7 @@ SOURCE_DIRS=(
     "/vol1/1000/Photos"
     "/vol1/1002"
 )
-DEST_ROOT="alist-crypt:/"
+DEST_ROOT="aliyun_secret:/"
 LOG_FILE="/home/admin/rclone_daily.log"
 LOCK_FILE="/tmp/rclone_autobackup.lock"
 # =========================================

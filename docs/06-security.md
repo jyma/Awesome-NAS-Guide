@@ -67,7 +67,7 @@
 
 3. **核心参数设置 ⚠️**：
     * **挂载路径 (Mount Path)**：填写 `/aliyun`
-        * **注意**：这是后续所有自动化脚本识别网盘的“暗号”，**请务必填 `/aliyun`，不要随意发挥**。
+        * **注意**：这是后续所有自动化脚本识别网盘的“暗号”，**后续需要使用到该目录**。
     * **刷新令牌 (Refresh Token)**：
         * 阿里云盘 Open：使用 App 扫码获取 (参考 [Alist 官方文档](https://alist.nn.ci/zh/guide/drivers/aliyundrive_open.html))。
         * 其他网盘：请查阅 Alist 文档获取对应 Token。
@@ -93,7 +93,7 @@
 cd /tmp
 
 # 2. 下载 Rclone 压缩包 (版本 v1.72.0 amd64 为例)
-wget [https://github.com/rclone/rclone/releases/download/v1.72.0/rclone-v1.72.0-linux-amd64.zip](https://github.com/rclone/rclone/releases/download/v1.72.0/rclone-v1.72.0-linux-amd64.zip)
+wget https://github.com/rclone/rclone/releases/download/v1.72.0/rclone-v1.72.0-linux-amd64.zip
 
 # 3. 解压文件
 unzip rclone-v1.72.0-linux-amd64.zip
