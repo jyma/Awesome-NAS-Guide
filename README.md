@@ -142,7 +142,7 @@
 
 如有意向，请扫描下方二维码添加我的微信：
 
-div align="center">
+<div align="center">
   <table>
     <tr>
       <td align="center" width="220">
