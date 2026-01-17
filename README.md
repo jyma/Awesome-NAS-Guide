@@ -142,13 +142,29 @@
 
 如有意向，请扫描下方二维码添加我的微信：
 
-<div align="center">
-  <img src="./assets/wechat_qr.png" width="200" alt="WeChat QR Code">
-  <br>
-  <b>WeChat ID: mje</b>
+div align="center">
+  <table>
+    <tr>
+      <td align="center" width="220">
+        <img src="./assets/wechat_qr.png" width="200" alt="个人微信">
+        <br>
+        <b>👨‍💻 个人微信</b><br>
+        <span style="font-size: 12px;">(ID: mje)</span>
+      </td>
+      <td align="center" width="220">
+        <img src="./assets/wechat_group.png" width="200" alt="NAS技术交流群">
+        <br>
+        <b>👥 NAS 技术交流群</b><br>
+        <span style="font-size: 12px;">(群聊过期请加个人号)</span>
+      </td>
+    </tr>
+  </table>
 </div>
 
-📝 **添加好友暗号**：请备注 **"NAS"** 或 **"Github"**，通过后我会拉你入群。
+📝 **入群方式**：
+
+1. 直接扫描右侧 **群二维码** 加入（如果二维码未过期）。
+2. 如果群码失效，请扫描左侧添加 **个人微信**，备注 **"NAS"** 或 **"Github"**，我会手动拉你入群。
 
 在这里我们可以讨论：
 
