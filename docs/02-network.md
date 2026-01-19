@@ -474,12 +474,13 @@ docker run -d \
 
 ```mermaid
 graph TD
-    A[开始: 我有公网 IPv4 吗?] -->|有! 狂喜| B(💎 方案 O: 端口映射 - 极速)
+    A[Start: 我有公网 IPv4 吗?] -->|有! 狂喜| B(💎 方案 O: 端口映射 - 极速/兼容性无敌)
     A -->|没有| C{那我有公网 IPv6 吗?}
-    C -->|有| D(🥇 方案 A: IPv6 + DDNS - 免费高速)
+    C -->|有| D(🥇 方案 A: IPv6 + DDNS - 免费/跑满带宽)
     C -->|没有| E{我的核心需求是?}
-    E -->|白嫖 / 省心 / 仅管理后台| F(🥈 方案 B: Cloudflare Tunnel)
-    E -->|极速 / 看4K视频 / 远程办公| G(🥉 方案 C: 国内 VPS + FRP)
+    E -->|小白 / 简单 / 只要能连上| F(🥈 方案 B: Tailscale / Zerotier)
+    E -->|网页管理 / 只要稳 / 做备用| G(🥉 方案 C: Cloudflare Tunnel)
+    E -->|极速 / 4K观影 / 钞能力| H(⚡ 方案 D: 国内 VPS + FRP)
 ```
 
 > **👨‍💻 作者实战建议**：
