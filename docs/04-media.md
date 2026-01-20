@@ -40,10 +40,23 @@
     > * MoviePilot 在 `library` 文件夹创建了一个文件 B 指向同一个物理数据块。
     > * **删除 A，B 还在；删除 B，A 还在。** 只有 A 和 B 都删了，空间才释放。这让你既能保持 PT 做种，又能拥有完美的海报墙，且**不额外占用空间**。
 
-### 4.1.2 下载中心：qBittorrent 优化版
+### 4.1.2 下载中心：qBittorrent
 
-**1. Docker 部署 (Host 模式)**
-Host 模式能让 qB 直接获取 IPv6 地址，极大提升连接性。
+**1. 应用安装**
+
+根据您的需求选择以下任意一种安装方式：
+
+**方案 A：飞牛 (fnOS) 应用中心安装（推荐）**
+> 适合新手用户，操作简单，系统自动配置路径。
+
+1. 登录飞牛桌面，打开 **应用中心**。
+2. 在搜索栏输入 **qBittorrent**，点击 **安装**。
+3. 等待安装完成后点击 **打开**，系统将自动跳转至 Web 管理后台。
+
+**方案 B：Docker 命令行部署**
+> 适合熟悉 Linux 的高阶用户，便于自定义版本和挂载路径。
+
+请在 SSH 终端中执行以下命令（**注意**：请根据实际情况修改 `-v` 后的路径）：
 
 ```bash
 docker run -d \
@@ -59,29 +72,58 @@ docker run -d \
   linuxserver/qbittorrent:latest
 ```
 
-**2. 关键优化 (解决无速度问题) 🚀**
-进入 WebUI (`http://NAS-IP:8080`，默认账号 `admin` / `adminadmin`) -> **Tools** -> **Options**：
+### 2. 关键配置优化（解决无速度/连接问题） 🚀
 
-* **Connection (连接)**：
-  * **监听端口**：随机生成一个端口（例如 `54321`）。
-  * **路由器转发**：**务必**登录主路由后台，在端口转发/虚拟服务器中，添加这个端口（协议选 TCP+UDP），指向你的 NAS IP。
-* **BitTorrent (BT)**：
-  * **隐私**：**必须取消勾选**“启用匿名模式 (Enable anonymous mode)”。（勾选会导致很多 PT 站无法识别你的客户端，导致红种）。
-  * **队列**：勾选“不要计算慢速做种时间”，防止任务被挂起。
-* **Advanced (高级)**：
-  * **网络接口**：通常留空；如果遇到有 IPv6 地址但没速度，尝试指定绑定到 `eth0` 或 `bond0`。
+登录 qBittorrent WebUI（地址通常为 `http://NAS_IP:8080`，默认账号 `admin` / `adminadmin` 或 `admin`），点击顶部菜单栏 **工具 (Tools)** -> **选项 (Options)**：
+
+**1. 连接 (Connection)**
+
+* **监听端口**：建议手动指定一个固定端口（例如 `54321`），**不要**勾选“使用随机端口”，以便于后续配置路由器。
+* **端口转发（核心步骤）**：
+  * **如果你拥有公网 IPv4**：**务必**登录主路由器后台，在“端口转发”或“虚拟服务器”设置中，添加上述端口（协议选择 TCP+UDP），并将目标 IP 指向你的 NAS。这是获取高速上传的关键。
+  * **如果你没有公网 IPv4**：若遇到无上传速度的问题，请参考专项优化文档：[无公网 IP 上传优化指南](./docs/qbittorrent_upload.md)。
+
+**2. BitTorrent**
+
+* **隐私 (Privacy)**：
+  * **严禁勾选** “启用匿名模式 (Enable anonymous mode)”。
+  * *注意*：绝大多数 PT 站点要求客户端必须汇报真实信息，勾选此项会导致 Tracker 无法识别，直接导致任务红种（报错）。
+* **做种队列**：
+  * 勾选 “**不将慢速做种统计在内** (Do not count slow torrents in these limits)”。
+  * *作用*：防止低速任务占用队列名额，确保存活的任务能一直处于做种状态。
 
 ### 4.1.3 自动化大脑：MoviePilot (MP)
 
-MoviePilot 是自动化的核心，它负责指挥 qBittorrent 下载，并整理文件。
+MoviePilot (MP) 是整个媒体库自动化流程的“指挥官”，它负责协调资源搜索、订阅、调用 qBittorrent 下载，以及对下载完成的文件进行整理与刮削。
 
 **1. 准备工作 (必做)**
 
-* **注册 TMDB**：访问 [The Movie Database](https://www.themoviedb.org/)，注册账号 -> 设置 -> API -> 申请 API Key (选择 Developer)。
-* **获取 PT 站 Cookie**：你需要至少一个 PT 站账号，或者使用 IYUU 账号作为认证站点。
+* **认证站点**：MP 启动需要通过 PT 站点认证。你需要配置至少一个 PT 站 Cookie，或者使用更简单的 [IYUU](https://iyuu.cn/) 账号。
+* **网络环境**：MP 需要访问 TMDB 等海外 API 进行刮削。
+  * *建议*：为 NAS 配置透明代理；
+  * *或者*：利用局域网内其他设备（如电脑/软路由）的 HTTP 代理地址，填入 MP 的网络设置中。
 
 **2. 部署 MoviePilot**
-在 `/vol1/1000/DockerConfig/moviepilot` 下创建 `docker-compose.yml`：
+
+**方案 A：飞牛 (fnOS) 镜像仓库安装**
+
+1. 打开飞牛桌面，进入 **Docker** -> **镜像仓库**。
+2. 搜索 `moviepilot` 并下载（通常选择 `jxxghp/moviepilot`）。
+3. 创建容器时，**存储空间 (Volume)** 文件夹映射参考下表配置：
+
+| 宿主机路径 (NAS)                            | 容器内路径                         | 说明                                     |
+| :------------------------------------------ | :--------------------------------- | :--------------------------------------- |
+| `/vol1/1000/DockerConfig/moviepilot/config` | `/config`                          | 配置文件存储                             |
+| `/vol1/1000/DockerConfig/moviepilot/core`   | `/moviepilot/.cache/ms-playwright` | 浏览器内核缓存                           |
+| `/vol1/1000/Media`                          | `/media`                           | **核心：必须挂载媒体总目录以支持硬链接** |
+| `/var/run/docker.sock`                      | `/var/run/docker.sock`             | 用于管理其他容器                         |
+
+> 🖼️ **配置参考**：![MoviePilot配置截图](../assets/mp_config.png)
+
+**方案 B：Docker Compose 部署 (推荐)**
+> 适合需要精确控制环境变量的高阶用户。
+
+在 `/vol1/1000/DockerConfig/moviepilot` 目录下创建 `docker-compose.yml` 文件：
 
 ```yaml
 version: '3.3'
@@ -90,57 +132,89 @@ services:
     image: jxxghp/moviepilot:latest
     container_name: moviepilot
     restart: always
-    # Host 模式能更好解决刮削网络问题，并直接连接 qB
+    # 推荐使用 Host 模式，解决刮削网络问题并方便连接 qBittorrent
     network_mode: host
     volumes:
       - /vol1/1000/DockerConfig/moviepilot/config:/config
       - /vol1/1000/DockerConfig/moviepilot/core:/moviepilot/.cache/ms-playwright
-      # ⚠️ 注意：这里必须挂载 Media 根目录，只有这样才能实现硬链接
+      # ⚠️ 关键：必须挂载 Media 根目录，否则无法实现跨目录硬链接整理
       - /vol1/1000/Media:/media
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - NG_PORT=3000          # WEB 访问端口
+      - NG_PORT=3000          # Web 访问端口
       - PORT=3001             # API 端口
       - PUID=0
       - PGID=0
       - UMASK=022
-      - TMDB_API_KEY=YOUR_KEY # 【必填】你的 TMDB API Key
-      - AUTH_SITE=iyuu        # 认证站点，推荐填 iyuu
-      - IYUU_SIGN=YOUR_TOKEN  # IYUU 的 Token
+      # 认证配置 (以 IYUU 为例)
+      - AUTH_SITE=iyuu        # 认证站点标识
+      - IYUU_SIGN=YOUR_TOKEN  # 你的 IYUU Token (请替换为真实值)
 ```
 
 ### 3. 核心配置流程
 
-1. **访问后台**：`http://NAS-IP:3000` (初始账号 `admin`，密码在 `docker logs moviepilot` 日志中查看)。
-2. **下载器设置**：
-    * 类型：`qBittorrent`
-    * Host：`http://127.0.0.1:8080` (因为 MoviePilot 也是 Host 模式，直接填本机回环地址即可)
-    * **下载路径**：`/media/downloads` (注意：这里要填容器内的路径)
-3. **媒体库设置**：
-    * 电影路径：`/media/library/movies`
-    * 剧集路径：`/media/library/tv`
-4. **目录整理 (关键)**：
-    * 开启“自动整理”。
-    * **整理方式**：务必选择 **硬链接 (Link)**。
-    * 如果设置正确，你会发现下载完成后，`/media/library` 里瞬间出现了整理好的文件，而硬盘空间并没有减少。
+**1. 初始化登录**
+
+* **访问地址**：`http://NAS_IP:3000`
+* **获取密码**：首次启动后，超级管理员密码会打印在容器日志中。
+  * *查看方式*：在飞牛 Docker 管理界面点击 moviepilot 容器 -> **日志**，搜索关键字 `password` 或 `初始密码`。
+
+**2. 下载器设置**
+
+进入 **设置** -> **下载器** -> 点击 **新增**，配置如下：
+
+* **类型**：`qBittorrent`
+* **Host**：`http://127.0.0.1:8085`
+  * *注意*：此处端口 `8085` 需与您 qBittorrent 实际 WebUI 端口一致。
+  * *技巧*：因为 MP 和 qB 均采用了 Host 网络模式，它们相当于在同一台电脑上，因此可以直接使用 `127.0.0.1` (localhost) 通信，无需填写 NAS 局域网 IP。
+
+**3. 媒体库设置 (重中之重)**
+
+进入 **设置** -> **目录**，配置映射关系。这一步决定了“硬链接”能否成功：
+
+* **下载目录 (来源)**：`/media/downloads`
+  * *对应 qBittorrent 的下载路径。*
+* **媒体库目录 (目标)**：`/media/library`
+  * *刮削整理后的电影将出现在这里。*
+* **整理方式**：**务必选择 “硬链接 (Link)”**
+
+> 🖼️ **配置参考**：![媒体库配置截图](../assets/mp_storage.png)
+
+> **💡 硬链接验证成功标志**：
+> 当下载完成后，你会发现 `/media/library` 目录下生成了整理好的电影文件（带海报结构），但查看 NAS 总剩余空间时，**存储空间并没有减少**。这说明硬链接配置成功，两份文件指向了硬盘上的同一个数据块。
 
 ---
 
 ## 4.2 家庭影院：Jellyfin (全格式播放)
 
-海报墙有了，现在我们要解决“怎么看”的问题，特别是如何在外网流畅播放 4K 视频。
+海报墙搭建完毕后，我们需要解决“怎么看”的问题。Jellyfin 不仅能展示精美的海报，更重要的是它具备强大的**实时转码**能力，能让你在户外（4G/5G 网络）也能流畅播放家中的 4K 原盘电影。
 
 ### 4.2.1 部署并开启核显硬解
 
-我们使用 `nyanmisaka` 维护的特供版，对中文和驱动支持更好。
+**方案 A：飞牛 (fnOS) 应用中心安装（推荐）**
+> 适合新手用户，系统会自动透传核显驱动，无需额外配置。
+
+1. 打开飞牛桌面，进入 **应用中心**。
+2. 搜索 **"Jellyfin"**，点击安装。
+3. 安装完成后点击 **打开**，即可跳转至网页初始化向导。
+
+**方案 B：Docker 命令行部署**
+> 适合需要特定版本优化（如解决字幕乱码、驱动兼容性）的高阶用户。
+
+这里我们推荐使用 `nyanmisaka/jellyfin` 镜像，该版本针对国内环境集成了完善的 Intel/AMD 显卡驱动和中文字体支持。
+
+请在 SSH 终端中执行以下命令：
 
 ```bash
 docker run -d \
   --name=jellyfin \
   --restart=always \
   --net=host \
+  # ⚠️ 关键：将核显设备映射进容器，否则无法开启硬件转码
   --device /dev/dri:/dev/dri \
+  # 配置文件路径
   -v /vol1/1000/DockerConfig/jellyfin:/config \
+  # 媒体库路径：指向 MP 整理后的 hard link 目录
   -v /vol1/1000/Media/library:/media \
   nyanmisaka/jellyfin:latest
 ```
@@ -168,17 +242,14 @@ docker run -d \
 
 ### 4.2.3 媒体库权限管理 (家长控制)
 
-为了不让孩子看到不适合的内容（比如《权力的游戏》）：
+为了不让孩子看到不适合的内容（比如《Tokyo Hot》）：
 
 1. **新建用户**：控制台 -> 用户 -> 新增用户（如 `Kids`）。
 2. **设置密码**：给家长 `admin` 账号设置强密码，`Kids` 账号可设简单密码。
 3. **目录访问控制**：
     * 点击 Kids 用户 -> **媒体库访问**。
-    * **只勾选** `动漫` 或 `教育` 文件夹。
-    * **取消勾选** `movies` 和 `tv` 文件夹。
-4. **功能限制**：
-    * **取消勾选** “允许删除媒体” (防止熊孩子误删文件)。
-    * **取消勾选** “允许修改配置”。
+    * **媒体选择只勾选** `动漫` 或 `教育` 文件夹。
+    * **选择取消勾选** `movies` 和 `tv` 文件夹。
 
 ---
 
