@@ -18,7 +18,7 @@
 
 ## 📂 文件结构说明
 
-本目录 (`scripts/natmap/`) 已经内置了所有需要的文件：
+[本目录 (scripts/natmap/)](../scripts)已经内置了所有需要的文件：
 
 ```text
 /natmap/
@@ -35,7 +35,7 @@
 
 为了方便配置，我们建议将文件统一放在 NAS 的根目录 `/natmap` 下。
 
-1. **下载**：将本仓库中的 `scripts/natmap` 文件夹下载到NAS 的根目录 `/` 下
+1. **下载**：将本仓库中的 [(scripts/natmap/)](../scripts) 文件夹下载到NAS 的根目录 `/` 下
 2. **检查路径**：
     确保下传后的路径结构如下（本教程以此路径为示例）：
     * `/natmap/update.sh`
