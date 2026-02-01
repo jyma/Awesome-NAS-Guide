@@ -136,29 +136,25 @@
 * **[6.3 灾难恢复演练](./docs/06-security.md#63-灾难恢复演练-restore)**
   * **恢复测试**：模拟 NAS 物理损坏场景，从云端解密并拉取数据，验证备份的有效性（没有经过恢复测试的备份都是无效的）。
 
-### [第七章：安全加固篇 —— 防范攻击，守护数据](./docs/07-security-hardening.md)
+### [第七章：安全加固篇 —— 纵深防御与主动安全](./docs/07-security-hardening.md)
 >
-> **🌟 实现功能**：主动防御勒索病毒与恶意攻击，构建多层次的 NAS 安全防护体系。
+> **🌟 实现功能**：透视黑客攻击视角，构建从网络隐身到数据兜底的纵深防御体系。
 
-* **[7.1 威胁认知](./docs/07-security-hardening.md#71-威胁认知nas-面临的安全风险)**
-  * **真实案例**：DeadBolt、QLocker 等针对 NAS 的勒索病毒案例分析。
-  * **攻击向量**：暴力破解、凭证填充、漏洞利用等常见入侵途径。
-* **[7.2 账户与访问控制](./docs/07-security-hardening.md#72-账户与访问控制)**
-  * **禁用默认账户**：重命名 admin、启用多因素认证 (MFA)。
-  * **最小权限**：根据角色分配精细化权限，限制横向移动。
-* **[7.3 网络安全加固](./docs/07-security-hardening.md#73-网络安全加固)**
-  * **VPN 优于端口转发**：Tailscale/WireGuard 减少攻击面的最佳实践。
-  * **自动封锁**：配置 IP 封锁策略，阻断暴力破解。
-* **[7.4 系统更新与补丁](./docs/07-security-hardening.md#74-系统更新与补丁管理)**
-  * **及时更新**：修复已知漏洞，Docker 容器镜像更新策略。
-* **[7.5 不可变快照](./docs/07-security-hardening.md#75-不可变快照勒索病毒的克星)**
-  * **定时快照**：利用 Btrfs/ZFS 快照机制实现"时光回溯"。
-  * **回滚演练**：勒索加密后的恢复实战。
-* **[7.6 安全监控与告警](./docs/07-security-hardening.md#76-安全监控与告警)**
-  * **登录审计**：发现异常登录行为。
-  * **邮件告警**：第一时间收到安全通知。
-* **[7.7 安全检查清单](./docs/07-security-hardening.md#77-安全检查清单-checklist)**
-  * **可打印清单**：账户、网络、系统、数据、监控五大维度的配置核对表。
+* **[7.1 透视黑客视角](./docs/07-security-hardening.md#71-透视黑客视角你的-nas-是如何被攻破的)**
+  * **攻击链分析**：Shodan 扫描、WebUI 漏洞 (RCE) 与横向移动机制科普。
+* **[7.2 网络隐身 (第一道防线)](./docs/07-security-hardening.md#72-第一道防线网络隐身-network-stealth)**
+  * **IPv6 防火墙**：如何正确配置默认拒绝策略，防止内网设备裸奔。
+  * **地域封锁**：利用 GeoIP 屏蔽 99% 的海外自动化扫描。
+* **[7.3 安全隧道 (第二道防线)](./docs/07-security-hardening.md#73-第二道防线安全隧道-secure-tunneling)**
+  * **零信任访问**：VPN/SD-WAN (Tailscale/ZeroTier) 优于传统端口转发。
+* **[7.4 身份与供应链 (第三道防线)](./docs/07-security-hardening.md#74-第三道防线身份与供应链-identity--supply-chain)**
+  * **账户安全**：禁用 Admin、强制 MFA 与 Bitwarden 密码管理。
+  * **镜像安全**：配置 Registry Mirrors 解决 Docker 无法更新的安全隐患。
+* **[7.5 数据兜底 (最后防线)](./docs/07-security-hardening.md#75-最后一道防线数据兜底-data-resilience)**
+  * **不可变快照**：利用 CoW 机制一键回滚勒索加密。
+  * **异地备份**：Rclone 加密上传云端。
+* **[7.6 全方位感知](./docs/07-security-hardening.md#76-全方位感知现代化告警-)**
+  * **即时告警**：配置 Webhook 将通知推送到微信/飞书/钉钉。
 
 ---
 
