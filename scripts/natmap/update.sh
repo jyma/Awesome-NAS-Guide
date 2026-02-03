@@ -22,6 +22,15 @@ KEEP_ALIVE="10"  # 心跳间隔(秒)
 SCRIPT_DIR=$(cd "$(dirname "$0")"; pwd)
 SCRIPT_PATH="$SCRIPT_DIR/$(basename "$0")"
 
+# -------------------------------------------------------
+# 日志功能
+# -------------------------------------------------------
+LOG_FILE="$SCRIPT_DIR/natmap.log"
+# 将标准输出和错误输出都追加写入日志文件
+exec >> "$LOG_FILE" 2>&1
+echo "--- New Session: $(date) ---"
+# -------------------------------------------------------
+
 # --- [模式一] 启动模式 (无参数时执行) ---
 if [ -z "$1" ]; then
     echo ">>> 正在初始化 NATMap 启动器..."
@@ -97,9 +106,9 @@ else
 
     if [ -n "$TORRENTS" ]; then
         curl -s -o /dev/null -X POST -b "$QB_COOKIE" -d "hashes=$TORRENTS" "http://$QB_HOST:$QB_PORT/api/v2/torrents/reannounce"
-        echo "   -> 汇报请求已发送。"
+        echo "    -> 汇报请求已发送。"
     else
-        echo "   -> 未找到运行中的种子。"
+        echo "    -> 未找到运行中的种子。"
     fi
 
     # 4. 更新防火墙 (TCP+UDP)
